@@ -1,33 +1,38 @@
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
 
-#define LED_PORT (GPIOA)
-#define LED_PIN  (GPIO5)
-
-static void rcc_setup(void) {
+#define LED_PORT (GPIOA) //setup so we don't have to update all the time
+#define LED_PIN (GPIO5)
+static void rcc_setup(void){
+  //need to setup clock, it takes a constant pointer (does not update it), 84M cycles per second
   rcc_clock_setup_pll(&rcc_hsi_configs[RCC_CLOCK_3V3_84MHZ]);
 }
 
-static void gpio_setup(void) {
+static void gpio_setup(void){
+  //to send clock to our peripheral
   rcc_periph_clock_enable(RCC_GPIOA);
+  //Pll UP Down is some value that it always keep, overwritable, when we have some floating point
   gpio_mode_setup(LED_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, LED_PIN);
 }
 
-static void delay_cycles(uint32_t cycles) {
-  for (uint32_t i = 0; i < cycles; i++) {
+static void delay_cycles(uint32_t cycles){
+  //created some delay, then added inline assembly so compiler don't remove this loop
+  for (uint32_t i=0; i<cycles;i++){
     __asm__("nop");
   }
 }
 
-int main(void) {
+int main(void){
+  //setup functions
   rcc_setup();
   gpio_setup();
 
-  while (1) {
-    gpio_toggle(LED_PORT, LED_PIN);
+  while(1){
+    gpio_toggle(LED_PORT,LED_PIN);
     delay_cycles(84000000 / 4);
   }
-
-  // Never return
+  //Never return
   return 0;
 }
+
+
