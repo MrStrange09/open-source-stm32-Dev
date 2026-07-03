@@ -1,29 +1,26 @@
 {
+  "version": "0.2.0",
   "configurations": [
+    // Debug the app firmware on a Nucleo-F411RE using the onboard ST-Link via OpenOCD.
     {
-      "name": "Debug Application",
+      "name": "ST-Link: Debug Application",
       "cwd": "${workspaceFolder}/app",
-      "executable": "./firmware.elf",
-      "serverpath": "/usr/bin/JLinkGDBServer",
-      "servertype": "jlink",
+      "executable": "${workspaceFolder}/app/firmware.elf",
       "request": "launch",
       "type": "cortex-debug",
-      "device": "STM32F401RE",
+      "servertype": "openocd",
+      "device": "STM32F411RE",
+      "gdbPath": "${workspaceFolder}/.vscode/gdb-multiarch-nx",
+      "searchDir": [
+        "/usr/share/openocd/scripts"
+      ],
+      "configFiles": [
+        "interface/stlink.cfg",
+        "target/stm32f4x.cfg"
+      ],
+      "showDevDebugOutput": "raw",
       "runToEntryPoint": "main",
-      "interface": "swd",
       "preLaunchTask": "build_debug"
-    },
-    {
-      "name": "Attach to active",
-      "cwd": "${workspaceFolder}/app",
-      "executable": "./firmware.elf",
-      "serverpath": "/usr/bin/JLinkGDBServer",
-      "servertype": "jlink",
-      "request": "attach",
-      "type": "cortex-debug",
-      "device": "STM32F401RE",
-      "runToEntryPoint": "main",
-      "interface": "swd",
     }
   ]
 }
