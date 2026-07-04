@@ -1,31 +1,49 @@
 # Learning Notes
 
-This repo is my hands-on workspace for following the Low Byte Productions Bare Metal Series.
+Personal watch-along repo for the Low Byte Productions Bare Metal Series.
 
-## Current Stage: Blinky
+## Current Stage
 
-Board: Nucleo-F411RE  
-MCU: STM32F411RE  
-Debugger: onboard ST-Link  
-LED: PA5
+- Board: Nucleo-F411RE
+- MCU: STM32F411RE
+- Debugger: onboard ST-Link
+- Current working feature: SysTick-driven blinky on PA5
 
-## What We Changed
+## Branch Policy
 
-- Switched to the author repo's blinky-era branch: `my-blinky`.
-- Updated VS Code debug config to use ST-Link + OpenOCD instead of J-Link.
-- Set linker RAM to `128K` for STM32F411RE.
-- Added `.vscode/gdb-multiarch-nx` so GDB ignores local GEF config during embedded debugging.
+- `main`: latest current course progress.
+- `blinky`: saved checkpoint where delay-loop blinky works.
+- `systick-blinky`: saved checkpoint where SysTick blinky works.
+- Later checkpoint branches: create only when a feature works, e.g. `systick`, `uart`.
+- Keep `origin` as my GitHub repo.
+- Keep `upstream` only as the original author's repo reference.
 
-## Important Commands
+Normal update:
 
-Build firmware:
+```bash
+git status
+git add .
+git commit -m "Short useful message"
+git push
+```
+
+Create a working checkpoint:
+
+```bash
+git branch checkpoint-name
+git push -u origin checkpoint-name
+```
+
+## Build
+
+Run `make` from `app/`, not repo root.
 
 ```bash
 cd app
 make
 ```
 
-Clean and rebuild:
+Clean rebuild:
 
 ```bash
 cd app
@@ -33,47 +51,31 @@ make clean
 make
 ```
 
-Check tools:
+## Debug
 
-```bash
-arm-none-eabi-gcc --version
-gdb-multiarch --version
-openocd --version
-make --version
-```
-
-Test ST-Link/OpenOCD manually:
-
-```bash
-openocd -s /usr/share/openocd/scripts -f interface/stlink.cfg -f target/stm32f4x.cfg
-```
-
-Stop OpenOCD:
-
-```bash
-Ctrl+C
-```
-
-## Debugging In VS Code
-
-Use this configuration:
+VS Code config:
 
 ```text
 ST-Link: Debug Application
 ```
 
-Expected flow:
+Flow: VS Code builds, OpenOCD talks to ST-Link, GDB connects, debugger stops at `main`; press `F5` to continue.
 
-1. VS Code runs `make bin` in `app`.
-2. OpenOCD talks to the ST-Link.
-3. GDB connects to OpenOCD.
-4. The debugger stops at `main`.
-5. Press `F5` / Continue to let the LED blink.
+## SysTick Notes
 
-## Notes To Remember
+- SysTick is configured for `1000 Hz`, so one tick is `1 ms`.
+- `sys_tick_handler()` increments the global `ticks` counter.
+- The main loop toggles the LED when `1000` ticks have passed.
 
-- Run `make` from `app/`, not the repo root.
+Manual OpenOCD check:
+
+```bash
+openocd -s /usr/share/openocd/scripts -f interface/stlink.cfg -f target/stm32f4x.cfg
+```
+
+## Gotchas
+
 - `arm-none-eabi-gcc` with no input prints `fatal error: no input files`; that is normal.
-- Running `openocd` without `-f interface/... -f target/...` fails; that is normal.
-- `stm32f4x.cfg` is correct for STM32F411RE because F411 is part of the STM32F4 family.
-- If GDB loads GEF, embedded debugging can fail with Python or remote I/O errors; use `gdb-multiarch -nx`.
+- `openocd` without `-f interface/... -f target/...` fails; that is normal.
+- `stm32f4x.cfg` is correct for STM32F411RE.
+- Use `gdb-multiarch -nx` for embedded debug so local GDB plugins like GEF do not interfere.
