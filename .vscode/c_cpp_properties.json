@@ -1,18 +1,24 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "STM32F4",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/app/inc",
+                "${workspaceFolder}/libopencm3/include"
             ],
             "defines": [
-                "STM32F4",
-                "__ARM_ARCH_7EM__"
+                "STM32F4"
             ],
             "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "compilerArgs": [
+                "-mthumb",
+                "-mcpu=cortex-m4",
+                "-mfloat-abi=hard",
+                "-mfpu=fpv4-sp-d16"
+            ],
             "cStandard": "c99",
             "cppStandard": "c++14",
-            "intelliSenseMode": "gcc-arm"
+            "intelliSenseMode": "linux-gcc-arm"
         }
     ],
     "version": 4

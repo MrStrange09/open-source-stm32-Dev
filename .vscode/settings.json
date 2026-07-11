@@ -11,5 +11,6 @@
     "sync.h": "c",
     "ring-buffer.h": "c",
     "flash_common_all.h": "c"
-  }
+  },
+  "cortex-debug.variableUseNaturalFormat": false
 }

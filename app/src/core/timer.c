@@ -3,7 +3,7 @@
 #include <libopencm3/stm32/rcc.h>
 
 // 84_000_000
-// freq = system_freq / ((prescaler-1) + (arr-1))
+// pwm_freq = timer_clock / (prescaler * arr)
 #define PRESCALER (84)
 #define ARR_VALUE (1000)
 
