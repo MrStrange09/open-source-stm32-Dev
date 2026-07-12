@@ -7,7 +7,7 @@ Personal watch-along repo for the Low Byte Productions Bare Metal Series.
 - Board: Nucleo-F411RE
 - MCU: STM32F411RE
 - Debugger: onboard ST-Link
-- Current working feature: base bootloader + app image layout
+- Current working feature: UART driver on USART2 (interrupt echo)
 - Learning notes live in `notes/`.
 
 ## Branch Policy
@@ -17,7 +17,8 @@ Personal watch-along repo for the Low Byte Productions Bare Metal Series.
 - `systick-blinky`: saved checkpoint where SysTick blinky works.
 - `pwm`: saved checkpoint where timer PWM fade works.
 - `baseBootloader`: saved checkpoint where the base bootloader builds and is embedded into the app image.
-- Later checkpoint branches: create only when a feature works, e.g. `systick`, `uart`.
+- `uart-driver-1b`: saved checkpoint where the USART2 UART driver echoes characters over the ST-Link virtual COM port.
+- Later checkpoint branches: create only when a feature works.
 - Keep `origin` as my GitHub repo.
 - Keep `upstream` only as the original author's repo reference.
 - `libopencm3` is vendored into this repo so learning comments inside it are saved by normal Git commits.

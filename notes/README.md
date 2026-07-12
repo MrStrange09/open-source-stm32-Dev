@@ -16,4 +16,6 @@ Current notes:
 - `blink.md`: GPIO output and delay-loop blink.
 - `systick-blink.md`: SysTick-based non-blocking blink.
 - `pwm.md`: Timer PWM fade on the onboard LED.
+- `base-bootloader.md`: base bootloader image and app layout.
+- `uart-driver-1b.md`: first UART driver on USART2 with an interrupt echo.
 - `project-structure.md`: why headers, source files, and the Makefile are split.
