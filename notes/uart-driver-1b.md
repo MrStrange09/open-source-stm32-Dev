@@ -135,6 +135,11 @@ right way (so it releases the port): `Ctrl-A` then `k`, then `y`.
 
 ## Important Limitations (Why This Is "1B")
 
+> **Superseded:** these limitations are the reason for the next checkpoint. The
+> single-byte mailbox has since been replaced by a ring buffer — see
+> [ring-buffer.md](ring-buffer.md). The snippets below describe the original 1B
+> code, kept here as history.
+
 - The mailbox is only **one byte**. If two bytes arrive before the main loop
   reads, the first is silently overwritten. A ring buffer is the natural next
   step.

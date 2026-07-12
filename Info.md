@@ -7,7 +7,7 @@ Personal watch-along repo for the Low Byte Productions Bare Metal Series.
 - Board: Nucleo-F411RE
 - MCU: STM32F411RE
 - Debugger: onboard ST-Link
-- Current working feature: UART driver on USART2 (interrupt echo)
+- Current working feature: UART driver on USART2 (interrupt echo), RX now backed by a ring buffer (circular FIFO)
 - Learning notes live in `notes/`.
 
 ## Branch Policy
@@ -18,6 +18,7 @@ Personal watch-along repo for the Low Byte Productions Bare Metal Series.
 - `pwm`: saved checkpoint where timer PWM fade works.
 - `baseBootloader`: saved checkpoint where the base bootloader builds and is embedded into the app image.
 - `uart-driver-1b`: saved checkpoint where the USART2 UART driver echoes characters over the ST-Link virtual COM port.
+- `ring-buffer`: saved checkpoint where UART RX is backed by a ring buffer so bursts of bytes are queued instead of dropped.
 - Later checkpoint branches: create only when a feature works.
 - Keep `origin` as my GitHub repo.
 - Keep `upstream` only as the original author's repo reference.

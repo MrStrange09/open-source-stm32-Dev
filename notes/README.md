@@ -18,4 +18,5 @@ Current notes:
 - `pwm.md`: Timer PWM fade on the onboard LED.
 - `base-bootloader.md`: base bootloader image and app layout.
 - `uart-driver-1b.md`: first UART driver on USART2 with an interrupt echo.
+- `ring-buffer.md`: circular FIFO that backs UART RX so bursts of bytes aren't dropped.
 - `project-structure.md`: why headers, source files, and the Makefile are split.
